@@ -64,10 +64,10 @@ function displayMenu() {
 	if (powerPellets > 0) {
 	console.log('(p) Eat Power-Pellet');
 	}
-	console.log('(1) Eat Inky');
-	console.log('(2) Eat Blinky');
-	console.log('(3) Eat Pinky');
-	console.log('(4) Eat Cyde');
+	console.log('(1) Eat Inky' + edible(ghosts[0]));
+	console.log('(2) Eat Blinky' + edible(ghosts[1]));
+	console.log('(3) Eat Pinky' + edible(ghostss[2]));
+	console.log('(4) Eat Cyde' + edible(ghosts[3]));
 	console.log('(q) Quit');
 }
 
@@ -83,14 +83,25 @@ function eatDot() {
 	score += 10;
 }
 
-function eatGhost(ghosts) {
+function edible(ghost) {
+	if (ghost.edible === false) {
+		return '(inedible)';
+	} else {
+		return '(edible)';
+	}
+}
+
+function eatGhost(ghost) {
 	if (ghost.edible === false) {
 		console.log('\nChomp! ' + ghost.name + ' the ' + ghost.colour + ' ate Pac-Man!');
-		lives -= 1
-	// } else (ghost.edible === true) {
-	// 	console.log('\nChomp! Pac-Man just ate' + ghost.name + ' the ' + ghost.colur);
-	// }
-}}
+		lives -= 1;
+		gameOver();
+	} else {
+		console.log('\nChomp! Pac-Man just ate' + ghost.name + ' the ' + ghost.colour);
+		score += 200;
+		ghost.edible = false;
+	}
+}
 
 function gameOver() {
 	if (lives === 0) {
@@ -121,16 +132,16 @@ function processInput(key) {
 			eatDot();
 			break;
 		case '1':
-			eatGhost(ghost[0]);
+			eatGhost(ghosts[0]);
 			break;
 		case '2':
-			eatGhost(ghost[1]);
+			eatGhost(ghosts[1]);
 			break;
 		case '3':
-			eatGhost(ghost[2]);
+			eatGhost(ghosts[2]);
 			break;
 		case '4':
-			eatGhost(ghost[3]);
+			eatGhost(ghosts[3]);
 			break;
 		case 'p':
 			eatPowerPellet();
